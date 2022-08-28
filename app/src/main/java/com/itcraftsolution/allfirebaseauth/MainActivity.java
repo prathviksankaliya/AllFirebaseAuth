@@ -36,8 +36,17 @@ public class MainActivity extends AppCompatActivity {
 
         if(user != null)
         {
-            binding.textView.setText(user.getEmail());
-            binding.textView2.setText(user.getDisplayName());
+            if(getIntent().getBooleanExtra("PhoneAuth", false))
+            {
+                binding.textView.setText(user.getPhoneNumber());
+                binding.textView2.setText(user.getDisplayName());
+            }else if (getIntent().getBooleanExtra("EmailAuth", false)){
+                binding.textView.setText(user.getEmail());
+                binding.textView2.setText(user.getDisplayName());
+            }else {
+                binding.textView.setText(user.getEmail());
+                binding.textView2.setText(user.getDisplayName());
+            }
         }
 
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -45,27 +54,30 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Sign in with Email password
 
-//                auth.signOut();
-//                startActivity(new Intent(MainActivity.this, registerEmailActivity.class));
-//                finish();
+                if(getIntent().getBooleanExtra("PhoneAuth", false) || getIntent().getBooleanExtra("EmailAuth", false))
+                {
+                    auth.signOut();
+                    startActivity(new Intent(MainActivity.this, NextActivity.class));
+                    finish();
+                }else{
 
-                //SignIn with Google Auth
+//                SignIn with Google Auth
 
-                googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+                    googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
-                googleSignInClient = GoogleSignIn.getClient(MainActivity.this, googleSignInOptions);
-                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                        {
-                            auth.signOut();
-                            startActivity(new Intent(MainActivity.this, NextActivity.class));
-                            finish();
+                    googleSignInClient = GoogleSignIn.getClient(MainActivity.this, googleSignInOptions);
+                    googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful())
+                            {
+                                auth.signOut();
+                                startActivity(new Intent(MainActivity.this, NextActivity.class));
+                                finish();
+                            }
                         }
-                    }
-                });
-
+                    });
+                }
             }
         });
 

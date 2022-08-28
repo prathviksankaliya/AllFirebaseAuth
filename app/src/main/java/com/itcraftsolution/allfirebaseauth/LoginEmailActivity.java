@@ -81,7 +81,8 @@ public class LoginEmailActivity extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         if(user != null)
         {
-            startActivity(new Intent(LoginEmailActivity.this, registerEmailActivity.class));
+            startActivity(new Intent(LoginEmailActivity.this, registerEmailActivity.class)
+                    .putExtra("EmailAuth", true));
         }
     }
 

@@ -67,7 +67,8 @@ public class registerEmailActivity extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
                     Toast.makeText(registerEmailActivity.this, "Register Successfully :)", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(registerEmailActivity.this, MainActivity.class);
+                    Intent intent = new Intent(registerEmailActivity.this, MainActivity.class)
+                            .putExtra("EmailAuth", true);
                     startActivity(intent);
 
                 }else{

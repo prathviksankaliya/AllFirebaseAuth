@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhoneOtpActivity">
+
+    <TextView
+        android:id="@+id/tvConfirmationTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="Enter the otp code to verify your phone number"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/tvConfirmationTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvConfirmationTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvConfirmationTitle">
+
+        <TextView
+            android:id="@+id/tvMessageBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="we sent 6 digit code"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvDisplayPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <in.aabhasjindal.otptextview.OtpTextView
+        android:id="@+id/otpView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:bar_enabled="true"
+        app:bar_height="1dp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:length="6"
+        app:otp_text_size="24dp"
+        app:width="40dp" />
+
+    <Button
+        android:id="@+id/btnContinuePhone"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="verify otp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otpView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

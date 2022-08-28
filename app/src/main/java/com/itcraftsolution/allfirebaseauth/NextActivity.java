@@ -2,6 +2,7 @@ package com.itcraftsolution.allfirebaseauth;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -69,6 +70,12 @@ public class NextActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NextActivity.this, PhoneLoginActivity.class));
+            }
+        });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -90,7 +97,8 @@ public class NextActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if(task.isSuccessful())
                                         {
-                                            startActivity(new Intent(NextActivity.this, MainActivity.class));
+                                            startActivity(new Intent(NextActivity.this, MainActivity.class)
+                                                    .putExtra("GoogleAuth", true));
                                             Toast.makeText(NextActivity.this, "Auth SuccessFul!!", Toast.LENGTH_SHORT).show();
                                         }else{
                                             Toast.makeText(NextActivity.this, "Auth Failed!!", Toast.LENGTH_SHORT).show();
