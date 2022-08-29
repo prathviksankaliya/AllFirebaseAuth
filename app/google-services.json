@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "557577465098",
+    "firebase_url": "https://allfirebaseauth-7cf16-default-rtdb.firebaseio.com",
     "project_id": "allfirebaseauth-7cf16",
     "storage_bucket": "allfirebaseauth-7cf16.appspot.com"
   },
@@ -35,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "557577465098-ne2tc490fcl7qdhunm7mntsh6a8duitq.apps.googleusercontent.com",
+              "client_id": "557577465098-0012rsjlg33degee24v155kuqu536rri.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

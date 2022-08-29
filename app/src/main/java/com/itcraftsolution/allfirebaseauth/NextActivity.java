@@ -76,6 +76,12 @@ public class NextActivity extends AppCompatActivity {
                 startActivity(new Intent(NextActivity.this, PhoneLoginActivity.class));
             }
         });
+        binding.btnFirebaseDb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NextActivity.this, FirebaseDbActivity.class));
+            }
+        });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
