@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="12dp"
     android:layout_gravity="center"
-    tools:context=".NextActivity">
+    tools:context=".Activity.NextActivity">
 
     <Button
         android:id="@+id/btnEmail"

@@ -1,4 +1,4 @@
-package com.itcraftsolution.allfirebaseauth;
+package com.itcraftsolution.allfirebaseauth.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.itcraftsolution.allfirebaseauth.databinding.ActivityMainBinding;
 import com.itcraftsolution.allfirebaseauth.databinding.ActivityPhoneLoginBinding;
 
 public class PhoneLoginActivity extends AppCompatActivity {

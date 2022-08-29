@@ -1,4 +1,4 @@
-package com.itcraftsolution.allfirebaseauth;
+package com.itcraftsolution.allfirebaseauth.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

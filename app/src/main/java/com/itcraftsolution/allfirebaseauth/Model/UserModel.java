@@ -1,12 +1,18 @@
-package com.itcraftsolution.allfirebaseauth;
+package com.itcraftsolution.allfirebaseauth.Model;
+
+import android.net.Uri;
 
 public class UserModel {
-    String name, graduation , semester;
+    String name, graduation , semester, pUri;
 
-    public UserModel(String name, String graduation, String semester) {
+    public UserModel() {
+    }
+
+    public UserModel(String name, String graduation, String semester, String pUri) {
         this.name = name;
         this.graduation = graduation;
         this.semester = semester;
+        this.pUri = pUri;
     }
 
     public String getName() {
@@ -31,5 +37,13 @@ public class UserModel {
 
     public void setSemester(String semester) {
         this.semester = semester;
+    }
+
+    public String getpUri() {
+        return pUri;
+    }
+
+    public void setpUri(String pUri) {
+        this.pUri = pUri;
     }
 }

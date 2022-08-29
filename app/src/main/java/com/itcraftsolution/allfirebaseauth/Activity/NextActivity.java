@@ -1,8 +1,7 @@
-package com.itcraftsolution.allfirebaseauth;
+package com.itcraftsolution.allfirebaseauth.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -10,10 +9,8 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

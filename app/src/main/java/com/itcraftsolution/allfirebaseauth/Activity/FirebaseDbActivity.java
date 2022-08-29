@@ -1,7 +1,8 @@
-package com.itcraftsolution.allfirebaseauth;
+package com.itcraftsolution.allfirebaseauth.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,12 +19,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.itcraftsolution.allfirebaseauth.Model.UserModel;
+import com.itcraftsolution.allfirebaseauth.R;
 import com.itcraftsolution.allfirebaseauth.databinding.ActivityFirebaseDbBinding;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -42,12 +46,17 @@ public class FirebaseDbActivity extends AppCompatActivity {
     private Uri filePath;
     private Bitmap bitmap;
     private boolean checkImage = false;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityFirebaseDbBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        dialog = new ProgressDialog(FirebaseDbActivity.this);
+        dialog.setMessage("Loading...");
+        dialog.setCancelable(false);
 
         binding.btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,34 +78,22 @@ public class FirebaseDbActivity extends AppCompatActivity {
                 {
                     Toast.makeText(FirebaseDbActivity.this, "Browse any Image", Toast.LENGTH_SHORT).show();
                 }else{
+                    dialog.show();
                     String name = binding.edName.getText().toString();
                     String graduation = binding.edGraduation.getText().toString();
                     String semester = binding.edSemester.getText().toString();
 
-                    UserModel model = new UserModel(name , graduation, semester);
-                    FirebaseDatabase db = FirebaseDatabase.getInstance();
-                    DatabaseReference reference = db.getReference("Students");
-                    reference.child(name).setValue(model)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful())
-                                            {
-                                                Toast.makeText(FirebaseDbActivity.this, "Data Stored successfully", Toast.LENGTH_SHORT).show();
-                                            }else{
-                                                Toast.makeText(FirebaseDbActivity.this, "Data Store Failed!!", Toast.LENGTH_SHORT).show();
-                                            }
-                                            binding.edName.setText("");
-                                            binding.edGraduation.setText("");
-                                            binding.edSemester.setText("");
-                                            uploadIntoFirebase(name);
-                                        }
-                                    });
-
+                    uploadIntoFirebase(name , graduation, semester);
                 }
             }
         });
 
+        binding.btnShowRecords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FirebaseDbActivity.this, ShowDeatilsActivity.class));
+            }
+        });
         binding.btnBrowserImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,10 +140,10 @@ public class FirebaseDbActivity extends AppCompatActivity {
         });
     }
 
-    private void uploadIntoFirebase(String name)
+    private void uploadIntoFirebase(String name, String graduation, String semester)
     {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference reference = storage.getReference().child(name);
+        StorageReference reference = storage.getReference("Students").child(name);
         reference.putFile(filePath)
                 .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -154,6 +151,24 @@ public class FirebaseDbActivity extends AppCompatActivity {
                         if(task.isSuccessful())
                         {
                             Toast.makeText(FirebaseDbActivity.this, "Image Stored successfully", Toast.LENGTH_SHORT).show();
+
+                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    dialog.dismiss();
+                                    UserModel model = new UserModel(name , graduation, semester, String.valueOf(uri));
+
+                                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+                                    DatabaseReference reference = db.getReference("Students");
+                                    reference.child(name).setValue(model);
+
+                                    Toast.makeText(FirebaseDbActivity.this, "Data Stored successfully", Toast.LENGTH_SHORT).show();
+                                    binding.edName.setText("");
+                                    binding.edGraduation.setText("");
+                                    binding.edSemester.setText("");
+                                    binding.igPreviewImage.setImageResource(R.mipmap.ic_launcher_round);
+                                }
+                            });
                         }else{
                             Toast.makeText(FirebaseDbActivity.this, "Image Store Failed!!", Toast.LENGTH_SHORT).show();
                         }
